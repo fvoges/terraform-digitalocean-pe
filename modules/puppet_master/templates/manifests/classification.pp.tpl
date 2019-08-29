@@ -12,6 +12,22 @@ $pe_master_new_classes = {
   'pe_repo::platform::el_7_x86_64' => {},
 }
 
+node_group { 'Production one-time run exception':
+  ensure               => 'present',
+  description          => 'Allow production nodes to request a different puppet environment for a one-time run. May request and use any Puppet environment except for \'development\'.',
+  environment          => 'agent-specified',
+  override_environment => true,
+  parent               => 'Production environment',
+  rule                 => ['and',
+  ['~',
+    ['fact', 'agent_specified_environment'],
+    '.+'],
+  ['not',
+    ['=',
+      ['fact', 'agent_specified_environment'],
+      'development']]],
+}
+
 node_group { 'PE Agent':
   ensure      => 'present',
   classes     => $pe_agent_classes + $pe_agent_new_classes,
@@ -49,5 +65,3 @@ node_group { 'PE Compile Master':
   parent               => 'PE Master',
   rule                 => ['=', ['trusted', 'extensions', 'pp_role'], 'puppet::master::cm']
 }
-
-
