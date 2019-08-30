@@ -19,3 +19,7 @@ module "puppet_master" {
   do_domain          = var.do_domain
   do_ssh_fingerprint = var.do_ssh_fingerprint
 }
+
+output "puppet_master_name" {
+  value = "puppet_master.name"
+}
