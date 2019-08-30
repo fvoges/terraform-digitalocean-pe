@@ -52,12 +52,12 @@ resource "digitalocean_droplet" "master" {
   }
 
   provisioner "file" {
-    source      = "files/data/master_csr_attributes.yaml"
+    source      = "${path.module}/files/data/master_csr_attributes.yaml"
     destination = "/opt/terraform/data/csr_attributes.yaml"
   }
 
   provisioner "file" {
-    source      = "files/scripts"
+    source      = "${path.module}/files/scripts"
     destination = "/opt/terraform"
   }
 
