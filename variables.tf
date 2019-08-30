@@ -78,17 +78,3 @@ variable "compiler_count" {
   description = "Number of Compile Masters"
   default     = "2"
 }
-
-# File templates
-
-data "template_file" "compiler_userdata" {
-  count    = "${var.compiler_count}"
-  template = "${file("${path.module}/templates/cloud-init/compiler.tpl")}"
-
-  vars = {
-    hostname     = "${format("puppet%02d", count.index + 1)}"
-    role         = "puppet::master::compiler"
-    domain       = "${var.do_domain}"
-    autosign_pwd = "${var.autosign_pwd}"
-  }
-}
