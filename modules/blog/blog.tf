@@ -48,7 +48,7 @@ resource "digitalocean_droplet" "blog" {
     host    = self.ipv4_address
     user    = "root"
     type    = "ssh"
-    agent   = true
+#    agent   = true
     timeout = "2m"
   }
 
@@ -85,7 +85,7 @@ resource "null_resource" "blog_cleanup" {
       host    = "${digitalocean_droplet.master.ipv4_address}"
       user    = "root"
       type    = "ssh"
-      agent   = true
+#      agent   = true
       timeout = "2m"
     }
   }

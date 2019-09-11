@@ -53,7 +53,7 @@ resource "digitalocean_droplet" "cd4pe" {
     host    = self.ipv4_address
     user    = "root"
     type    = "ssh"
-    agent   = true
+#    agent   = true
     timeout = "2m"
   }
 
@@ -90,7 +90,7 @@ resource "null_resource" "cd4pe_cleanup" {
       host    = "${digitalocean_droplet.master.ipv4_address}"
       user    = "root"
       type    = "ssh"
-      agent   = true
+#      agent   = true
       timeout = "2m"
     }
   }

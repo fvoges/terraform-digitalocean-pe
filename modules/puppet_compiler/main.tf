@@ -17,7 +17,7 @@ resource "digitalocean_droplet" "compiler" {
     host    = self.ipv4_address
     user    = "root"
     type    = "ssh"
-    agent   = true
+    # agent   = true
     timeout = "2m"
   }
 
@@ -46,7 +46,7 @@ resource "null_resource" "compiler_certs" {
     host    = var.master_ipv4
     user    = "root"
     type    = "ssh"
-    agent   = true
+#    agent   = true
     timeout = "2m"
   }
 

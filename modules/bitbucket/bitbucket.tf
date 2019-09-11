@@ -53,7 +53,7 @@ resource "digitalocean_droplet" "bitbucket" {
     host    = self.ipv4_address
     user    = "root"
     type    = "ssh"
-    agent   = true
+#    agent   = true
     timeout = "2m"
   }
 
@@ -90,7 +90,7 @@ resource "null_resource" "bitbucket_cleanup" {
       host    = "${digitalocean_droplet.master.ipv4_address}"
       user    = "root"
       type    = "ssh"
-      agent   = true
+#      agent   = true
       timeout = "2m"
     }
   }

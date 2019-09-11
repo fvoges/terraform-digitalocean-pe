@@ -38,7 +38,7 @@ resource "digitalocean_droplet" "master" {
     host    = self.ipv4_address
     user    = "root"
     type    = "ssh"
-    agent   = true
+    # agent   = true
     timeout = "2m"
   }
 

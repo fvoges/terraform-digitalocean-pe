@@ -42,7 +42,7 @@ resource "digitalocean_droplet" "ubuntu_agent" {
     host    = self.ipv4_address
     user    = "root"
     type    = "ssh"
-    agent   = true
+#    agent   = true
     timeout = "2m"
   }
 
@@ -79,7 +79,7 @@ resource "null_resource" "ubuntu_agent_cleanup" {
       host    = "${digitalocean_droplet.master.ipv4_address}"
       user    = "root"
       type    = "ssh"
-      agent   = true
+#      agent   = true
       timeout = "2m"
     }
   }
