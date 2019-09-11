@@ -9,10 +9,8 @@ resource "digitalocean_droplet" "compiler" {
   monitoring         = true
   resize_disk        = true
   ipv6               = true
-  ssh_keys = [
-    "${var.do_ssh_fingerprint}"
-  ]
-  tags      = ["all", "puppet-compile", "ssh4all"]
+  ssh_keys  = var.do_ssh_fingerprints
+  tags      = ["all", "puppet-compiler", "ssh4all"]
   user_data = "${element(data.template_file.compiler_userdata.*.rendered, count.index)}"
 
   connection {

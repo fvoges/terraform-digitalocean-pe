@@ -19,8 +19,7 @@ resource "digitalocean_droplet" "master" {
   monitoring         = true
   resize_disk        = true
   ipv6               = true
-  ssh_keys = [
-    "${var.do_ssh_fingerprint}"
+  ssh_keys           = var.do_ssh_fingerprints
   ]
   tags      = ["all", "puppet-master", "ssh4all"]
   user_data = "${data.template_file.master_userdata.rendered}"

@@ -21,8 +21,8 @@ variable "do_master_size" {
   default     = "s-4vcpu-8gb"
 }
 
-variable "do_ssh_fingerprint" {
-  type        = "string"
+variable "do_ssh_fingerprints" {
+  type        = list(string)
   description = "DigitalOcean SSH key fingerprint"
 }
 
