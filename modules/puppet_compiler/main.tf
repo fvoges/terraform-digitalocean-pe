@@ -103,3 +103,20 @@ resource "digitalocean_record" "puppet" {
   value  = var.compiler_count > 0 ? digitalocean_loadbalancer.puppet[0].ip : var.master_ipv4
   ttl    = 60
 }
+
+resource "digitalocean_firewall" "compiler" {
+  name = "puppet-compiler"
+  tags = ["puppet-compiler"]
+
+  inbound_rule {
+      protocol    = "tcp"
+      port_range  = "8140"
+      source_tags = ["puppet-compiler", "puppet-agent"]
+  }
+
+  inbound_rule {
+      protocol    = "tcp"
+      port_range  = "8142"
+      source_tags = ["puppet-compiler", "puppet-agent"]
+  }
+}
