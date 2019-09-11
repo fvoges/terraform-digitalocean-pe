@@ -95,3 +95,13 @@ data "template_file" "master_hiera_data" {
   }
 }
 
+data "template_file" "master_csr_attributes" {
+  template = "${file("${path.module}/templates/data/master_csr_attributes.yaml.tpl")}"
+  vars = {
+    pp_datacenter  = "${var.do_region}"
+    pp_role        = "master"
+    pp_application = "puppet"
+    pp_environment = "production"
+  }
+}
+
