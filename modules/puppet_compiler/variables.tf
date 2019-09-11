@@ -34,18 +34,29 @@ variable "autosign_pwd" {
 
 variable "compiler_count" {
   type        = "string"
-  description = "Number of Compile Masters"
+  description = "Number of Puppet Compilers"
   default     = "2"
 }
 
+variable "master" {
+  type        = "string"
+  description = "FQDN of the Puppet Master"
+}
+
+variable "master_ipv4" {
+  type        = "string"
+  description = "IPv4 of the Puppet Master"
+}
+
 data "template_file" "compiler_userdata" {
-  count    = "${var.compiler_count}"
+  count    = var.compiler_count
   template = "${file("${path.module}/templates/cloud-init/compiler.tpl")}"
 
   vars = {
+    master       = var.master
     hostname     = "${format("puppet%02d", count.index + 1)}"
-    role         = "puppet::master::compiler"
-    domain       = "${var.do_domain}"
-    autosign_pwd = "${var.autosign_pwd}"
+    pp_role      = "compiler"
+    domain       = var.do_domain
+    autosign_pwd = var.autosign_pwd
   }
 }

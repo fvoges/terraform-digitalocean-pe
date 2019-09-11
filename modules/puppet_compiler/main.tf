@@ -27,13 +27,11 @@ resource "digitalocean_droplet" "compiler" {
       "rm -f /tmp/provisioning_done",
     ]
   }
-
-  depends_on = ["digitalocean_droplet.master"]
 }
 
 resource "digitalocean_record" "compiler" {
-  count  = "${var.compiler_count}"
-  domain = "${var.do_domain}"
+  count  = var.compiler_count
+  domain = var.do_domain
   type   = "A"
   name   = "${element(digitalocean_droplet.compiler.*.name, count.index)}"
   value  = "${element(digitalocean_droplet.compiler.*.ipv4_address, count.index)}"
@@ -45,7 +43,7 @@ resource "null_resource" "compiler_certs" {
   count = "${var.compiler_count}"
 
   connection {
-    host    = "${digitalocean_droplet.master.ipv4_address}"
+    host    = var.master_ipv4
     user    = "root"
     type    = "ssh"
     agent   = true
@@ -101,7 +99,7 @@ resource "digitalocean_loadbalancer" "puppet" {
 resource "digitalocean_record" "puppet" {
   domain = "${var.do_domain}"
   type   = "A"
-  name   = var.compiler_count > 0 ? digitalocean_loadbalancer.puppet[0].name : digitalocean_droplet.master.name
-  value  = var.compiler_count > 0 ? digitalocean_loadbalancer.puppet[0].ip : digitalocean_droplet.master.ipv4_address
+  name   = var.compiler_count > 0 ? digitalocean_loadbalancer.puppet[0].name : var.master
+  value  = var.compiler_count > 0 ? digitalocean_loadbalancer.puppet[0].ip : var.master_ipv4
   ttl    = 60
 }
