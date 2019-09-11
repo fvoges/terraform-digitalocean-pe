@@ -46,6 +46,17 @@ resource "digitalocean_droplet" "centos_agent" {
     timeout = "2m"
   }
 
+  provisioner "puppet" {
+    server             = aws_instance.puppetmaster.public_dns
+    server_user        = "ubuntu"
+    extension_requests = {
+      pp_application = var.pp_application
+      pp_datacenter  = var.pp_datacenter
+      pp_environment = var.pp_environment
+      pp_role        = var.pp_role
+    }
+  }
+
   provisioner "remote-exec" {
     inline = [
       "while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'waiting for boot-finished'; sleep 5; done;",

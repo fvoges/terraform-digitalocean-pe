@@ -19,6 +19,8 @@ if [ $? -ne 0 ]; then
   rm -fr /root/puppet-enterprise-*
 fi
 /opt/puppetlabs/puppet/bin/puppet agent -t
+/opt/puppetlabs/puppet/bin/puppet module install -i /etc/puppetlabs/code-staging/modules danieldreier/autosign
+/opt/puppetlabs/puppet/bin/puppet module install -i /etc/puppetlabs/code-staging/modules WhatsARanjit/node_manager
 echo "${console_pwd}" | /opt/puppetlabs/bin/puppet-access login admin --lifetime 90d && \
 echo "Deploying puppet code from version control server" && \
 /opt/puppetlabs/bin/puppet-code deploy --all --wait && \
@@ -32,4 +34,5 @@ echo "Clearing environments cache" && \
 echo "Clearing classifier cache" && \
 /opt/terraform/scripts/update_classes.sh
 /usr/local/bin/puppet agent -t
+
 exit 0

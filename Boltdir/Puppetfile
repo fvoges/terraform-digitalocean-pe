@@ -1,0 +1,3 @@
+
+mod 'danieldreier/autosign'
+mod 'puppetlabs/puppet_agent'
