@@ -24,7 +24,11 @@ resource "digitalocean_droplet" "master" {
   tags      = ["all", "puppet-master", "ssh4all"]
   user_data = "${data.template_file.master_userdata.rendered}"
 
-  depends_on = []
+  depends_on = [
+    digitalocean_tag.master,
+    digitalocean_tag.compiler,
+    digitalocean_tag.agent
+  ]
 
   lifecycle {
     # prevent_destroy = true
